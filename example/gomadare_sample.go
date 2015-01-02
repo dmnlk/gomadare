@@ -3,13 +3,15 @@ package main
 import (
 	"fmt"
 	"github.com/dmnlk/gomadare"
+	"os"
 )
 
 func main() {
-	client := gomadare.NewClient("Do84oBb6LKEms34UpTEhHxcdQ",
-		"r1WE3xKbDkbai1Bc6FPwX9353K4f4zO9dcs9eqHUMZuJMifs1P",
-		"85270957-ghFGzlk8tuxY4boACsAA8xdJlv3EpEFwGdNkTvkHn",
-		"u5QnST5CxBP53dy3vUDYHjRwrvBi5BYbP834QwiktIFWd")
+	ck := os.Getenv("ck")
+	cs := os.Getenv("cs")
+	at := os.Getenv("at")
+	as := os.Getenv("as")
+	client := gomadare.NewClient(ck, cs, at, as)
 	client.GetUserStream(nil)
 	fmt.Println("aa")
 }
