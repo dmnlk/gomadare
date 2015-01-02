@@ -13,13 +13,13 @@ const (
 	AccessTokenUrl    string = "https://api.twitter.com/oauth/access_token"
 )
 
-func newClient(consumerKey string, consumerSecret string, accessToken string, accessTokenSecret string) *Client {
+func NewClient(consumerKey string, consumerSecret string, accessToken string, accessTokenSecret string) *Client {
 	client := new(Client)
 	client.consumer = oauth.NewConsumer(consumerKey, consumerSecret, oauth.ServiceProvider{
 		RequestTokenUrl:   RequestTokenUrl,
 		AuthorizeTokenUrl: AuthorizeTokenUrl,
 		AccessTokenUrl:    AccessTokenUrl,
 	})
-	client.accessToken = &oauth.AccessToken{*accessToken, *accessTokenSecret, nil}
+	client.accessToken = &oauth.AccessToken{accessToken, accessTokenSecret, nil}
 	return client
 }
