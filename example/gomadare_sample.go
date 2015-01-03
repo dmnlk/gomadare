@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
-	"github.com/dmnlk/gomadare"
 	"os"
+
+	"github.com/dmnlk/gomadare"
 )
 
 func main() {
@@ -13,5 +13,4 @@ func main() {
 	as := os.Getenv("as")
 	client := gomadare.NewClient(ck, cs, at, as)
 	client.GetUserStream(nil)
-	fmt.Println("aa")
 }
