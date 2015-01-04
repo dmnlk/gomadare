@@ -7,11 +7,12 @@ import (
 
 	"github.com/k0kubun/pp"
 )
-
+// userstream url
 const (
 	STREAM_URL = "https://userstream.twitter.com/1.1/user.json"
 )
 
+// get User Stream and output std.out
 func (client *Client) GetUserStream(params map[string]string) {
 	//userStreamAPI叩く
 	response, err := client.consumer.Get(STREAM_URL, params, client.accessToken)

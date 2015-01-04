@@ -13,6 +13,8 @@ const (
 	AccessTokenUrl    string = "https://api.twitter.com/oauth/access_token"
 )
 
+
+// initialize client, need consumer key, consumersecret, accesstoken, accesstokensecret,from twitter dev
 func NewClient(consumerKey string, consumerSecret string, accessToken string, accessTokenSecret string) *Client {
 	client := new(Client)
 	client.consumer = oauth.NewConsumer(consumerKey, consumerSecret, oauth.ServiceProvider{
