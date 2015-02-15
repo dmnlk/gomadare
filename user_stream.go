@@ -3,14 +3,17 @@ package gomadare
 import (
 	"bufio"
 	"encoding/json"
-	"fmt"
+
+	"log"
 
 	"github.com/k0kubun/pp"
 )
+
 // userstream url
 const (
 	STREAM_URL = "https://userstream.twitter.com/1.1/user.json"
 )
+const OUTPUT_FILE = "event.json"
 
 // get User Stream and output std.out
 func (client *Client) GetUserStream(params map[string]string) {
@@ -19,29 +22,35 @@ func (client *Client) GetUserStream(params map[string]string) {
 	if err != nil {
 		return
 	}
-	fmt.Println("get")
-	//defer response.Body.Close()
-	//レスポンスのbodyをscannerで読み込む
-	fmt.Println(response.StatusCode)
+	defer response.Body.Close()
 	scanner := bufio.NewScanner(response.Body)
 	for {
-		fmt.Println("into forloop")
 		//都度scanして新しく受信してたら
 		if ok := scanner.Scan(); !ok {
-			fmt.Println("scan error")
+			log.Fatal("scan error")
 			continue
 		}
 		var result interface{}
+		b := scanner.Bytes()
 		//json化
-		if err := json.Unmarshal(scanner.Bytes(), &result); err != nil {
-			fmt.Println(err)
-			fmt.Println(scanner.Bytes())
+		if err := json.Unmarshal(b, &result); err != nil {
+			log.Println(err)
 			continue
 		}
-		pp.Print(result)
 		msg := result.(map[string]interface{})
-		if val, ok := msg["event"]; ok {
-			pp.Print(val)
+		if _, ok := msg["event"]; ok {
+			// unmarshal event
+			var e Event
+			if err := json.Unmarshal(b, &e); err != nil {
+				continue
+			}
+			pp.Print(e.Event)
+			pp.Print(e.TargetObject.Text)
+		}
+		if _, ok := msg[""]; ok {
+			pp.Print(result)
+			// unmarshal status
+			//ioutil.WriteFile(OUTPUT_FILE, scanner.Bytes(), os.ModePerm)
 		}
 	}
 }
