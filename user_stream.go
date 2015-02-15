@@ -13,7 +13,6 @@ import (
 const (
 	STREAM_URL = "https://userstream.twitter.com/1.1/user.json"
 )
-const OUTPUT_FILE = "event.json"
 
 // get User Stream and output std.out
 func (client *Client) GetUserStream(params map[string]string) {
@@ -24,8 +23,8 @@ func (client *Client) GetUserStream(params map[string]string) {
 	}
 	defer response.Body.Close()
 	scanner := bufio.NewScanner(response.Body)
+
 	for {
-		//都度scanして新しく受信してたら
 		if ok := scanner.Scan(); !ok {
 			log.Fatal("scan error")
 			continue
@@ -38,6 +37,7 @@ func (client *Client) GetUserStream(params map[string]string) {
 			continue
 		}
 		msg := result.(map[string]interface{})
+		//pp.Print(msg)
 		if _, ok := msg["event"]; ok {
 			// unmarshal event
 			var e Event
@@ -47,10 +47,13 @@ func (client *Client) GetUserStream(params map[string]string) {
 			pp.Print(e.Event)
 			pp.Print(e.TargetObject.Text)
 		}
-		if _, ok := msg[""]; ok {
-			pp.Print(result)
-			// unmarshal status
-			//ioutil.WriteFile(OUTPUT_FILE, scanner.Bytes(), os.ModePerm)
+		if _, ok := msg["user"]; ok {
+			// unmarshal Status
+			var s Status
+			if err := json.Unmarshal(b, &s); err != nil {
+				continue
+			}
+			pp.Print(s)
 		}
 	}
 }
