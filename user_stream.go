@@ -14,8 +14,10 @@ const (
 	STREAM_URL = "https://userstream.twitter.com/1.1/user.json"
 )
 
+type Handler func(data []byte) bool
+
 // get User Stream and output std.out
-func (client *Client) GetUserStream(params map[string]string) {
+func (client *Client) GetUserStream(params map[string]string, handle Handler) {
 	//userStreamAPI叩く
 	response, err := client.consumer.Get(STREAM_URL, params, client.accessToken)
 	if err != nil {
@@ -23,7 +25,8 @@ func (client *Client) GetUserStream(params map[string]string) {
 	}
 	defer response.Body.Close()
 	scanner := bufio.NewScanner(response.Body)
-
+	// ignore friend list id
+	scanner.Scan()
 	for {
 		if ok := scanner.Scan(); !ok {
 			log.Fatal("scan error")
