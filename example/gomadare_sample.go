@@ -12,7 +12,8 @@ func main() {
 	at := os.Getenv("at")
 	as := os.Getenv("as")
 	client := gomadare.NewClient(ck, cs, at, as)
-	client.GetUserStream(nil, func (s Status, e Event) {
-
+	client.GetUserStream(nil, func (s Status, e Event) bool {
+		return true
 	})
 }
+

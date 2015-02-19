@@ -12,10 +12,10 @@ const (
 	STREAM_URL = "https://userstream.twitter.com/1.1/user.json"
 )
 
-type Handler func(s Status, e Event) bool
+type Handler func(s Status, e Event)
 
 // get User Stream and output std.out
-func (client *Client) GetUserStream(params map[string]string, handle Handler) {
+func (client *Client) GetUserStream(params map[string]string, handler Handler) {
 	//userStreamAPI叩く
 	response, err := client.consumer.Get(STREAM_URL, params, client.accessToken)
 	if err != nil {
@@ -54,6 +54,6 @@ func (client *Client) GetUserStream(params map[string]string, handle Handler) {
 				continue
 			}
 		}
-		handle(s, e)
+		handler(s, e)
 	}
 }
