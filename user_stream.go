@@ -5,8 +5,6 @@ import (
 	"encoding/json"
 
 	"log"
-
-	"github.com/k0kubun/pp"
 )
 
 // userstream url
@@ -14,7 +12,7 @@ const (
 	STREAM_URL = "https://userstream.twitter.com/1.1/user.json"
 )
 
-type Handler func(data []byte) bool
+type Handler func(s Status, e Event) bool
 
 // get User Stream and output std.out
 func (client *Client) GetUserStream(params map[string]string, handle Handler) {
@@ -39,24 +37,23 @@ func (client *Client) GetUserStream(params map[string]string, handle Handler) {
 			log.Println(err)
 			continue
 		}
+		var e Event
+		var s Status
 		msg := result.(map[string]interface{})
 		//pp.Print(msg)
 		if _, ok := msg["event"]; ok {
 			// unmarshal event
-			var e Event
 			if err := json.Unmarshal(b, &e); err != nil {
 				continue
 			}
-			pp.Print(e.Event)
-			pp.Print(e.TargetObject.Text)
 		}
 		if _, ok := msg["user"]; ok {
 			// unmarshal Status
-			var s Status
+
 			if err := json.Unmarshal(b, &s); err != nil {
 				continue
 			}
-			pp.Print(s)
 		}
+		handle(s, e)
 	}
 }
