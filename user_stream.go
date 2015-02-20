@@ -13,7 +13,7 @@ const (
 )
 
 // get User Stream and output std.out
-func (client *Client) GetUserStream(params map[string]string,  f func(s Status, e Event)) {
+func (client *Client) GetUserStream(params map[string]string,  f func(Status, Event)) {
 	//userStreamAPI叩く
 	response, err := client.consumer.Get(STREAM_URL, params, client.accessToken)
 	if err != nil {
@@ -35,23 +35,23 @@ func (client *Client) GetUserStream(params map[string]string,  f func(s Status, 
 			log.Println(err)
 			continue
 		}
-		var e Event
-		var s Status
+		var event Event
+		var status Status
 		msg := result.(map[string]interface{})
 		//pp.Print(msg)
 		if _, ok := msg["event"]; ok {
 			// unmarshal event
-			if err := json.Unmarshal(b, &e); err != nil {
+			if err := json.Unmarshal(b, &event); err != nil {
 				continue
 			}
 		}
 		if _, ok := msg["user"]; ok {
 			// unmarshal Status
 
-			if err := json.Unmarshal(b, &s); err != nil {
+			if err := json.Unmarshal(b, &status); err != nil {
 				continue
 			}
 		}
-		f(s, e)
+		f(status, event)
 	}
 }
