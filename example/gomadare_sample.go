@@ -5,6 +5,7 @@ import (
 
 	"github.com/dmnlk/gomadare"
 	"github.com/k0kubun/pp"
+	"fmt"
 )
 
 func main() {
@@ -13,13 +14,14 @@ func main() {
 	at := os.Getenv("at")
 	as := os.Getenv("as")
 	client := gomadare.NewClient(ck, cs, at, as)
-	client.GetUserStream(nil, func (s Status, e Event) {
-		if s != nil {
-			pp.Println(s)
+	client.GetUserStream(nil, func(s gomadare.Status, e gomadare.Event) {
+		if &s != nil {
+			fmt.Println("return status")
+			pp.Print(s)
 		}
-		if e != nil {
+		if &e != nil {
+			fmt.Println("return event")
 			pp.Print(e)
 		}
 	})
 }
-
