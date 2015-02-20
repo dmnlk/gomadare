@@ -12,9 +12,8 @@ const (
 	STREAM_URL = "https://userstream.twitter.com/1.1/user.json"
 )
 
-// get User Stream and output std.out
+// get User Stream
 func (client *Client) GetUserStream(params map[string]string,  f func(Status, Event)) {
-	//userStreamAPI叩く
 	response, err := client.consumer.Get(STREAM_URL, params, client.accessToken)
 	if err != nil {
 		return
@@ -38,16 +37,12 @@ func (client *Client) GetUserStream(params map[string]string,  f func(Status, Ev
 		var event Event
 		var status Status
 		msg := result.(map[string]interface{})
-		//pp.Print(msg)
 		if _, ok := msg["event"]; ok {
-			// unmarshal event
 			if err := json.Unmarshal(b, &event); err != nil {
 				continue
 			}
 		}
 		if _, ok := msg["user"]; ok {
-			// unmarshal Status
-
 			if err := json.Unmarshal(b, &status); err != nil {
 				continue
 			}
