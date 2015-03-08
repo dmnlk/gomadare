@@ -17,7 +17,7 @@ func main() {
 	client.GetUserStream(nil, func(s gomadare.Status, e gomadare.Event) {
 		if &s != nil {
 			fmt.Println("return status")
-			pp.Print(s)
+			//pp.Print(s)
 		}
 		if &e != nil {
 			fmt.Println("return event")
