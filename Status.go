@@ -13,7 +13,13 @@ type Status struct {
 			Indices     []int  `json:"indices"`
 			URL         string `json:"url"`
 		} `json:"urls"`
-		UserMentions []interface{} `json:"user_mentions"`
+		UserMentions []struct {
+			ID         int    `json:"id"`
+			IdStr      string `json:"id_str"`
+			Indices    []int  `json:"indices"`
+			Name       string `json:"name"`
+			ScreenName string `json:"screen_name"`
+		} `json:"user_mentions"`
 	} `json:"entities"`
 	FavoriteCount        int         `json:"favorite_count"`
 	Favorited            bool        `json:"favorited"`
