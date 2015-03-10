@@ -36,6 +36,7 @@ type Status struct {
 	PossiblySensitive    bool        `json:"possibly_sensitive"`
 	RetweetCount         int         `json:"retweet_count"`
 	Retweeted            bool        `json:"retweeted"`
+	RetweetedStatus                  interface{} `json:"retweeted_status"`
 	Source               string      `json:"source"`
 	Text                 string      `json:"text"`
 	TimestampMs          string      `json:"timestamp_ms"`
