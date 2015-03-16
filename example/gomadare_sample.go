@@ -3,9 +3,10 @@ package main
 import (
 	"os"
 
+	"fmt"
+
 	"github.com/dmnlk/gomadare"
 	"github.com/k0kubun/pp"
-	"fmt"
 )
 
 func main() {
@@ -17,7 +18,7 @@ func main() {
 	client.GetUserStream(nil, func(s gomadare.Status, e gomadare.Event) {
 		if &s != nil {
 			fmt.Println("return status")
-			//pp.Print(s)
+			pp.Print(s)
 		}
 		if &e != nil {
 			fmt.Println("return event")
