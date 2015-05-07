@@ -13,7 +13,7 @@ const (
 )
 
 // get User Stream
-func (client *Client) GetUserStream(params map[string]string,  f func(Status, Event)) {
+func (client *Client) GetUserStream(params map[string]string, f func(Status, Event)) {
 	response, err := client.consumer.Get(STREAM_URL, params, client.accessToken)
 	if err != nil {
 		return
@@ -47,6 +47,8 @@ func (client *Client) GetUserStream(params map[string]string,  f func(Status, Ev
 				continue
 			}
 		}
+		log.Println("--------------------------------------")
+		log.Println(result)
 		f(status, event)
 	}
 }
