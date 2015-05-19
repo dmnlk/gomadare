@@ -47,8 +47,6 @@ func (client *Client) GetUserStream(params map[string]string, f func(Status, Eve
 				continue
 			}
 		}
-		log.Println("--------------------------------------")
-		log.Println(result)
 		f(status, event)
 	}
 }
