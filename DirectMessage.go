@@ -1,4 +1,4 @@
-package gomdare
+package gomadare
 
 type DirectMessage struct {
 	CreatedAt string `json:"created_at"`
