@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 
 	"log"
+	"github.com/k0kubun/pp"
 )
 
 // userstream url
@@ -24,7 +25,7 @@ func (client *Client) GetUserStream(params map[string]string, f func(Status, Eve
 	scanner.Scan()
 	for {
 		if ok := scanner.Scan(); !ok {
-			log.Fatal("scan error")
+			log.Println("scan error")
 			continue
 		}
 		var result interface{}
@@ -34,6 +35,7 @@ func (client *Client) GetUserStream(params map[string]string, f func(Status, Eve
 			log.Println(err)
 			continue
 		}
+
 		var event Event
 		var status Status
 		msg := result.(map[string]interface{})
@@ -46,6 +48,8 @@ func (client *Client) GetUserStream(params map[string]string, f func(Status, Eve
 			if err := json.Unmarshal(b, &status); err != nil {
 				continue
 			}
+		} else {
+			pp.Println(result)
 		}
 		f(status, event)
 	}
