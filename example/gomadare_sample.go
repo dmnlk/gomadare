@@ -3,10 +3,7 @@ package main
 import (
 	"os"
 
-	"fmt"
-
 	"github.com/dmnlk/gomadare"
-	"github.com/k0kubun/pp"
 )
 
 func main() {
@@ -16,13 +13,13 @@ func main() {
 	as := os.Getenv("as")
 	client := gomadare.NewClient(ck, cs, at, as)
 	client.GetUserStream(nil, func(s gomadare.Status, e gomadare.Event) {
-		if &s != nil {
-			fmt.Println("return status")
-			pp.Print(s)
-		}
-		if &e != nil {
-			fmt.Println("return event")
-			pp.Print(e)
-		}
+		//		if &s != nil {
+		//			fmt.Println("return status")
+		//			pp.Print(s)
+		//		}
+		//		if &e != nil {
+		//			fmt.Println("return event")
+		//			pp.Print(e)
+		//		}
 	})
 }
