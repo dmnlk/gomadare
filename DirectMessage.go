@@ -2,6 +2,7 @@ package gomadare
 
 type DirectMessage struct {
 	CreatedAt string `json:"created_at"`
+	DirectMessage     string `json:"direct_message"`
 	Entities  struct {
 		Hashtags     []interface{} `json:"hashtags"`
 		Urls         []interface{} `json:"urls"`
