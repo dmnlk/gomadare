@@ -25,8 +25,7 @@ func (client *Client) GetUserStream(params map[string]string, f func(Status, Eve
 	scanner.Scan()
 	for {
 		if ok := scanner.Scan(); !ok {
-			log.Println("scan error")
-			continue
+			log.Fatal("error")
 		}
 		var result interface{}
 		b := scanner.Bytes()
